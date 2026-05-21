@@ -6,7 +6,7 @@ export function OrdersPage(){
         <>
       <title>Orders</title> 
 
-      <Header cart = {cart}/>
+      <Header />
 
     <div className = "orders-page">
       <div className = "page-title">Your Orders</div>
