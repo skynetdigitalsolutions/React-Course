@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
 
-     axios.get('/api/cart-items?expand = product')
+     axios.get('/api/cart-items?expand=product')
      .then((response) => {
       setCart(response.data)
      })
@@ -25,7 +25,7 @@ function App() {
     <Routes>
       <Route path='/' element={<HomePage cart={cart} />} />
       <Route path="checkout" element={<CheckOut cart = {cart}/>} />
-      <Route path = 'orders' element = {<OrdersPage/>} />
+      <Route path = 'orders' element = {<OrdersPage cart = {cart}/>} />
       <Route path='tracking' element = {<TrackingPage/>} />
       <Route path='*' element = {<ErrorPage/>}/>
     </Routes>
