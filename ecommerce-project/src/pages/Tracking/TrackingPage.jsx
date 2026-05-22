@@ -6,7 +6,6 @@ export function TrackingPage({cart}){
     return(
         <>
          <Header cart = {cart}/>
-       <title>Tracking</title>
        
       
 

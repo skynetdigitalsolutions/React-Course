@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import {formatMoney} from '../../utils/money.js'
-import './OrdersHeader.css'
+import '../../components/Header.jsx'
 
 export function OrdersHeader({order}){
     return(

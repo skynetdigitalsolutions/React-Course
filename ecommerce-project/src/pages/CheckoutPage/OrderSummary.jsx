@@ -1,5 +1,3 @@
-import './CheckoutPage.css'
-import './CheckoutHeader.css'
 import dayjs from 'dayjs';
 import {formatMoney} from '../../utils/money.js'
 import { DeliveryOptions } from './DeliveryOptions.jsx';

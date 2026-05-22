@@ -1,7 +1,7 @@
 import { CheckoutHeader } from './CheckoutHeader'
 import { PaymentSummary } from './PaymentSummary.jsx'
 import axios from 'axios'
-import {OrderSummary} from './OrderSummary.jsx'
+import {OrderSummary} from './OrderSummary'
 import {useState,useEffect} from 'react'
 import './CheckoutPage.css'
 
@@ -23,7 +23,6 @@ export function CheckOut({cart}) {
 
     return (
         <>
-            <title>CheckOut</title>
             <CheckoutHeader/>
 
             <div className="checkout-page">
@@ -32,6 +31,7 @@ export function CheckOut({cart}) {
                 <div className="checkout-grid">
             <OrderSummary cart = {cart} deliveryOptions = {deliveryOptions}/>
             <PaymentSummary paymentSummary = {paymentSummary}/>
+           
 
                 </div>
             </div>

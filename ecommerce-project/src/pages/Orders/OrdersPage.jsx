@@ -2,8 +2,9 @@ import {useState,useEffect} from 'react'
 import axios from 'axios'
 import {Header} from '../../components/Header.jsx'
 import './OrdersPage.css'
+import {OrdersGrid} from './OrdersGrid.jsx'
 import { OrdersHeader } from './OrdersHeader.jsx'
-import { OrdersGrid } from './OrdersGrid.jsx'
+
 
 export function OrdersPage({cart}){
     const [orders,setOrders] = useState([])
@@ -16,8 +17,6 @@ export function OrdersPage({cart}){
     } ,[])
     return(
         <>
-      <title>Orders</title> 
-
       <Header cart = {cart}/>
 
     <div className = "orders-page">

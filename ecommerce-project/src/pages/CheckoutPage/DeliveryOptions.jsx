@@ -1,11 +1,10 @@
 import dayjs from 'dayjs'
 import {formatMoney} from '../../utils/money.js'
-import './CheckoutPage.css'
+
 
 export function DeliveryOptions({deliveryOptions,cartItem}){
     return(
-        
-                                <div className="delivery-options">
+                          <div className="delivery-options">
                                     <div className="delivery-options-title">
                                         Choose a delivery option:
                                     </div>

@@ -3,10 +3,8 @@ import {Link} from 'react-router'
 import dayjs from 'dayjs'
 import './OrdersPage.css'
 
-export function OrderGrid({order}){
+export function OrdersGrid({order}){
     return(
-        
-
 
           <div className = "order-details-grid">
             {order.products.map((orderProduct) =>{
