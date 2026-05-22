@@ -1,45 +1,38 @@
-import {Fragment} from 'react'
-import {Link} from 'react-router'
-import dayjs from 'dayjs'
-import './OrdersPage.css'
+import { Fragment } from 'react';
+import { Link } from 'react-router';
+import dayjs from 'dayjs';
+import './OrdersPage.css';
 
-export function OrdersGrid({order}){
-    return(
+export function OrdersGrid({ order }) {
+	return (
+		<div className="order-details-grid">
+			{order.products.map((orderProduct) => {
+				return (
+					<Fragment key={orderProduct.id}>
+						<div className="product-image-container">
+							<img src={orderProduct.product.image} />
+						</div>
 
-          <div className = "order-details-grid">
-            {order.products.map((orderProduct) =>{
-              return(
-                <Fragment key = {orderProduct.id}>
-            <div className = "product-image-container">
-              <img src={orderProduct.product.image} />
-            </div>
+						<div className="product-details">
+							<div className="product-name">{orderProduct.product.name}</div>
+							<div className="product-delivery-date">
+								Arriving on :{dayjs(order.estimatedDeliveryTimeMs).format('DD, MMMM ')}
+							</div>
+							<div className="product-quantity">Quantity:{orderProduct.quantity}</div>
+							<button className="buy-again-button button-primary">
+								<img className="buy-again-icon" src="src/assets/icons/buy-again.png" />
+								<span className="buy-again-message">Add to Cart</span>
+							</button>
+						</div>
 
-            <div className = "product-details">
-              <div className = "product-name">
-                {orderProduct.product.name}
-              </div>
-              <div className = "product-delivery-date">
-                Arriving on :{dayjs(order.estimatedDeliveryTimeMs).format('DD, MMMM ')}
-              </div>
-              <div className = "product-quantity">
-                 Quantity:{orderProduct.quantity}
-              </div>
-              <button className = "buy-again-button button-primary">
-                <img className = "buy-again-icon" src="src/assets/icons/buy-again.png" />
-                <span className = "buy-again-message">Add to Cart</span>
-              </button>
-            </div>
-
-            <div className = "product-actions">
-              <Link to = {`/tracking/${order.id}/${orderProduct.product.id}`}>
-                <button className = "track-package-button button-secondary">
-                  Track package
-                </button>
-              </Link>
-            </div>
-            </Fragment>
-              )
-            })}
-          </div>
-    )
+						<div className="product-actions">
+							<Link to={`/tracking/${order.id}/${orderProduct.product.id}`}>
+								<button className="track-package-button button-secondary">Track package</button>
+							</Link>
+						</div>
+					</Fragment>
+				);
+			})}
+		</div>
+	);
 }
