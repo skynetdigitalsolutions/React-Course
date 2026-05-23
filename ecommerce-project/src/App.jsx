@@ -8,6 +8,8 @@ import { TrackingPage } from './pages/Tracking/TrackingPage.jsx';
 import { ErrorPage } from './pages/Errors/Errorpage.jsx';
 import './App.css';
 
+window.axios = axios;
+
 function App() {
 	const [cart, setCart] = useState([]);
 
@@ -15,6 +17,7 @@ function App() {
 		const response = await axios.get('/api/cart-items?expand=product');
 		setCart(response.data);
 	};
+	
 
 	useEffect(() => {
 		loadCart();
