@@ -25,7 +25,9 @@ export function Products({ product, loadCart }) {
 	};
 
 	return (
-		<div key={product.id} className="product-container">
+		<div key={product.id} 
+		data-testid = 'product-container'
+		className="product-container">
 			<div className="product-image-container">
 				<img className="product-image" 
 				data-testid = 'product-image'
