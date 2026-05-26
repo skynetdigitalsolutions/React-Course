@@ -1,20 +1,28 @@
 import { it, expect, describe, vi, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { Homepage } from "./Homepage";
+import { HomePage } from "./Homepage";
 import axios from "axios";
 import { MemoryRouter } from "react-router";
+import userEvent from "@testing-library/user-event";
 
 vi.mock("axios");
 
 describe("Homepage Component", () => {
   let loadCart;
+  let user;
 
   beforeEach(() => {
     loadCart = vi.fn();
+    user = userEvent.setup() 
+
+    vi.clearAllMocks()
+
+    axios.post.mockResolvedValue({})
+  
 
     axios.get.mockImplementation((urlPath) => {
       if (urlPath === "/api/products") {
-        return {
+        return Promise.resolve({
           data: [
             {
               id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -39,15 +47,61 @@ describe("Homepage Component", () => {
               keywords: ["sports", "basketballs"],
             },
           ],
-        };
+        });
       }
+      return Promise.resolve({ data: [] });
     });
   });
+
+  it('adds products to the cart from the homepage', async () => {
+    render(
+      <MemoryRouter>
+        <HomePage cart={[]} loadCart={loadCart} />
+      </MemoryRouter>)
+
+      const productContainers = await screen.findAllByTestId('product-container')
+      expect(productContainers.length).toBeGreaterThanOrEqual(2)
+
+      const firstQuantitySelector = within(productContainers[0]).getByTestId('quantity-selector')
+      await user.selectOptions(firstQuantitySelector, '2')
+
+      const secondQuantitySelector = within(productContainers[1]).getByTestId('quantity-selector')
+      await user.selectOptions(secondQuantitySelector, '3')
+
+      const firstAddButton = within(productContainers[0]).getByTestId('add-to-cart-button')
+      await user.click(firstAddButton)
+
+      const secondAddButton = within(productContainers[1]).getByTestId('add-to-cart-button')
+      await user.click(secondAddButton)
+
+      expect(axios.post).toHaveBeenCalledTimes(2)
+
+      expect(axios.post).toHaveBeenNthCalledWith(
+        1,
+        '/api/cart-items',
+        {
+          productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+          quantity: 2,
+        },
+      )
+
+      expect(axios.post).toHaveBeenNthCalledWith(
+        2,
+        '/api/cart-items',
+        {
+          productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+          quantity: 3,
+        },
+      );
+
+      expect(loadCart).toHaveBeenCalledTimes(2);
+    
+  })
 
   it("displays products based on search query", async () => {
     render(
       <MemoryRouter>
-        <Homepage cart={[]} loadCart={loadCart} />
+        <HomePage cart={[]} loadCart={loadCart} />
       </MemoryRouter>,
     );
 
@@ -57,14 +111,14 @@ describe("Homepage Component", () => {
     expect(
       within(productContainers[0]).getByText(
         "Black and Gray Athletic Cotton Socks - 6 Pairs",
-      ).toBeInTheDocument()
-    )
+      )
+    ).toBeInTheDocument()
 
     
     expect(
       within(productContainers[1]).getByText("Intermediate Size Basketball",
-      ).toBeInTheDocument()
-    )
+      )
+    ).toBeInTheDocument()
     
   });
 });

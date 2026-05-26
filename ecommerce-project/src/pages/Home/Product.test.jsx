@@ -7,8 +7,10 @@ import axios from "axios";
 vi.mock('axios');
 
 describe("Product Component", () => {
+  let user;
   let product;
   let loadCart;
+
 
   beforeEach(() => {
     product =  {
@@ -23,29 +25,31 @@ describe("Product Component", () => {
     keywords: ["sports", "basketballs"],
   };
    loadCart = vi.fn();
+   user = userEvent.setup();
+   vi.clearAllMocks();
+   axios.post.mockResolvedValue({});
   })
 
 
 
-  it("displays product details correctly", () => {});
+  it("displays product details correctly", () => {
     render(<Products product={product} loadCart={loadCart} />);
 
-  expect(screen.getByText("Intermediate Size Basketball")).toBeInTheDocument();
-  expect(screen.getByText("$20.95")).toBeInTheDocument();
-  expect(screen.getByTestId("product-image")).toHaveAttribute(
-    "src",
-    "images/products/intermediate-composite-basketball.jpg",
-  );
-  expect(screen.getByTestId("product-rating-image")).toHaveAttribute(
-    "src",
-    `images/ratings/rating-40.png `,
-  );
-
+    expect(screen.getByText("Intermediate Size Basketball")).toBeInTheDocument();
+    expect(screen.getByText(/\$ 20\.95/)).toBeInTheDocument();
+    expect(screen.getByTestId("product-image")).toHaveAttribute(
+      "src",
+      "images/products/intermediate-composite-basketball.jpg",
+    );
+    expect(screen.getByTestId("product-rating-image")).toHaveAttribute(
+      "src",
+      `images/ratings/rating-40.png `,
+    );
+  });
 
   it("adds a product to the cart", async () => {
 
     render(<Products product={product} loadCart={loadCart} />);
-    const user = userEvent.setup();
     const addToCartButton = screen.getByTestId("add-to-cart-button");
     await user.click(addToCartButton);
 
@@ -56,16 +60,14 @@ describe("Product Component", () => {
     expect(loadCart).toHaveBeenCalled();
   });
 
-  beforeEach(() => {
-    
-  })
+
 
   it('quantity selector has default value of 1', async () => {
     render(<Products  product = {product} loadCart = {loadCart}/>)
     const quantitySelector = screen.getByTestId('quantity-selector')
     expect(quantitySelector).toHaveValue('1')
 
-    const user = userEvent.setup();
+  
     await user.selectOptions(quantitySelector,'3')
 
     expect(quantitySelector).toHaveValue('3');

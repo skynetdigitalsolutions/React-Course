@@ -1,6 +1,6 @@
 import { formatMoney } from '../../utils/money';
 import axios from 'axios'
-import {useNavigate} from 'react-router';
+import { useNavigate } from 'react-router';
 
 export function PaymentSummary({ paymentSummary, loadCart }) {
 	const navigate = useNavigate()
@@ -8,44 +8,62 @@ export function PaymentSummary({ paymentSummary, loadCart }) {
 	const createOrder = async () => {
 		await axios.post('/api/orders')
 		await loadCart()
-	    navigate('/orders')
+		navigate('/orders')
 	}
 
 	return (
-		<div className="payment-summary">
+		<div className="payment-summary"
+		data-testid = 'payment-summary'
+		>
 			<div className="payment-summary-title">Payment Summary</div>
 
 			{paymentSummary && (
 				<>
-					<div className="payment-summary-row">
+					<div className="payment-summary-row"
+						data-testid='product-cost'
+					>
 						<div>Items ({paymentSummary.totalItems}):</div>
 						<div className="payment-summary-money">{formatMoney(paymentSummary.productCostCents)}</div>
 					</div>
 
-					<div className="payment-summary-row">
+					<div className="payment-summary-row"
+						data-testid='shipping-cost'
+					>
 						<div>Shipping &amp; handling:</div>
-						<div className="payment-summary-money">{formatMoney(paymentSummary.shippingCostCents)}</div>
+						<div className="payment-summary-money" >{formatMoney(paymentSummary.shippingCostCents)}</div>
 					</div>
 
-					<div className="payment-summary-row subtotal-row">
+					<div className="payment-summary-row subtotal-row"
+						data-testid='subtotal-before-tax'
+					>
 						<div>Total before tax:</div>
-						<div className="payment-summary-money">
+						<div className="payment-summary-money"
+						>
 							{formatMoney(paymentSummary.totalCostBeforeTaxCents)}
 						</div>
 					</div>
 
-					<div className="payment-summary-row">
+					<div className="payment-summary-row"
+						data-testid='tax'
+					>
 						<div>Estimated tax (10%):</div>
-						<div className="payment-summary-money">{formatMoney(paymentSummary.taxCents)}</div>
+						<div className="payment-summary-money"
+
+						>{formatMoney(paymentSummary.taxCents)}</div>
 					</div>
 
-					<div className="payment-summary-row total-row">
+					<div className="payment-summary-row total-row"
+						data-testid='order-total'
+					>
 						<div>Order total:</div>
-						<div className="payment-summary-money">{formatMoney(paymentSummary.totalCostCents)}</div>
+						<div className="payment-summary-money"
+
+						>{formatMoney(paymentSummary.totalCostCents)}</div>
 					</div>
 
 					<button className="place-order-button button-primary"
-					onClick = {createOrder}
+						data-testid='place-order-button'
+						onClick={createOrder}
 					>Place your order</button>
 				</>
 			)}

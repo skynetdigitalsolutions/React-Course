@@ -8,8 +8,8 @@ import {useSearchParams} from 'react-router'
 
 export function HomePage({ cart, loadCart }) {
 	const [products, setProducts] = useState([]);
-	const searchParams = useSearchParams()
-	const search = searchParams.get('search')
+	const [searchParams] = useSearchParams();
+	const search = searchParams.get('search');
 
 	useEffect(() => {
 		const getResponse = async () => {
