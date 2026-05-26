@@ -171,8 +171,12 @@ describe('Testing Order Summary Components', () => {
 
         /*
         We can't use getAllByTestId because if it doesn't find anything ,
-        it will cause an error 
+        it will cause an error .Instead we use queryAllByTestId,this does the same thing 
+        but doesnot call any error.
+        If it doesnot find anything ,it just returns an empty array
         */
+
+        expect(screen.queryAllByTestId('cart-item-container').length).toBe(0)
 
     })
 
