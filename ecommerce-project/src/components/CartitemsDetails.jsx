@@ -40,11 +40,17 @@ export function CartitemsDetails({
 
   return (
     <>
-      <img className="product-image" src={cartItem.product.image} />
+      <img className="product-image" src={cartItem.product.image} 
+      data-testid = 'cart-item-image'
+      />
 
       <div className="cart-item-details">
-        <div className="product-name">{cartItem.product.name}</div>
-        <div className="product-price">
+        <div className="product-name"
+        data-testid = 'cart-item-name'
+        >{cartItem.product.name}</div>
+        <div className="product-price"
+        data-testid = 'cart-item-price'
+        >
           {formatMoney(cartItem.product.priceCents)}
         </div>
         <div className="product-quantity">
@@ -56,7 +62,9 @@ export function CartitemsDetails({
 				onKeyDown = {handleQuantityKeyDown}
 
 				/> :
-				<span className = 'quantity-label' > {cartItem.quantity} </span>
+				<span className = 'quantity-label'
+        data-testid = 'cart-item-quantity'
+        > {cartItem.quantity} </span>
 			}
           </span>
           <span
@@ -68,6 +76,7 @@ export function CartitemsDetails({
           <span
             className="delete-quantity-link link-primary"
             onClick={deleteCartItem}
+            data-testid = 'cart-item-delete-quantity-link'
           >
             Delete
           </span>

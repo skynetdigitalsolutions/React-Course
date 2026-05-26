@@ -2,7 +2,7 @@ import { it, describe, vi, expect, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import axios from 'axios';
-import { CheckoutPage } from './CheckoutPage'
+import { CheckOut } from './CheckoutPage'
 
 vi.mock('axios')
 
@@ -89,7 +89,7 @@ describe('Testing Checkout page components', () => {
     it('diplays the page correctly', async () => {
         render(
             <MemoryRouter>
-                <CheckoutPage loadCart={loadCart} cart={cart} />
+                <CheckOut loadCart={loadCart} cart={cart} />
             </MemoryRouter>
         );
 
@@ -129,7 +129,6 @@ describe('Testing Checkout page components', () => {
         expect(screen.getByTestId('subtotal-before-tax')).toHaveTextContent('$47.74')
         expect(screen.getByTestId('tax')).toHaveTextContent('$4.77')
         expect(screen.getByTestId('order-total')).toHaveTextContent('$52.51')
-
 
     })
 
