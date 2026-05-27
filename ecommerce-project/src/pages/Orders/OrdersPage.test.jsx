@@ -1,18 +1,19 @@
 import { describe, vi, it, beforeEach, expect } from 'vitest'
 import { render, screen, within } from '@testing-library/react'
 import { OrdersPage } from './OrdersPage'
-import { OrdersGrid } from './OrdersGrid'
-import { OrdersHeader } from './OrdersHeader'
 import axios from 'axios'
 import { MemoryRouter } from 'react-router'
 
 vi.mock('axios')
 
 describe('Testing Orders Components', () => {
-    let cart;
-    let orders;
+    let cart
+    let orders
+    let loadCart
 
     beforeEach(() => {
+        loadCart = vi.fn()
+
         cart = [{
             productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
             quantity: 2,
@@ -21,7 +22,7 @@ describe('Testing Orders Components', () => {
             productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
             quantity: 1,
             deliveryOptionId: '2'
-        }];
+        }]
 
         orders = [{
             id: "27cba69d-4c3d-4098-b42d-ac7fa62b7664",
@@ -75,39 +76,37 @@ describe('Testing Orders Components', () => {
                     priceCents: 2095
                 }
             }]
-        }];
+        }]
+
+        vi.clearAllMocks()
 
         axios.get.mockImplementation(async (urlPath) => {
             if (urlPath === '/api/orders?expand=products') {
                 return { data: orders }
             }
         })
-
     })
 
     it('renders orders details correctly', async () => {
         render(
             <MemoryRouter>
-                <OrdersPage cart={cart} />
-                <OrdersHeader />
-                <OrdersGrid />
+                <OrdersPage cart={cart} loadCart={loadCart} />
             </MemoryRouter>
         )
 
-        expect(screen.getByText('Your Orders')).toBeInTheDocuments()
+        expect(screen.getByText('Your Orders')).toBeInTheDocument()
 
         const orderContainers = await screen.findAllByTestId('order-container')
         expect(orderContainers.length).toBe(2)
 
-        //Checking the details of the first order
-
+        // First order
         expect(
             within(orderContainers[0]).getByTestId('order-date')
         ).toHaveTextContent('August 12')
 
         expect(
             within(orderContainers[0]).getByTestId('order-total')
-        ).toHaveTextContent('$35.06')
+        ).toHaveTextContent('$ 35.06')
 
         expect(
             within(orderContainers[0]).getByTestId('order-id')
@@ -117,32 +116,31 @@ describe('Testing Orders Components', () => {
         expect(orderProducts.length).toBe(2)
 
         expect(
-            within(orderProducts[0]).getByText('Adults Plain Cotton T-Shirt - 2 Pack')
-        ).toBeInTheDocuments()
+            within(orderProducts[0]).getByText('Black and Gray Athletic Cotton Socks - 6 Pairs')
+        ).toBeInTheDocument()
 
         expect(
-            within(orderProducts[1]).getByText('Intermediate Size Basketball')
-        ).toBeInTheDocuments()
+            within(orderProducts[1]).getByText('Adults Plain Cotton T-Shirt - 2 Pack')
+        ).toBeInTheDocument()
 
-        //Check the details of the second order
+        // Second order
         expect(
             within(orderContainers[1]).getByTestId('order-date')
         ).toHaveTextContent('June 10')
 
         expect(
             within(orderContainers[1]).getByTestId('order-total')
-        ).toHaveTextContent('$41.90')
+        ).toHaveTextContent('$ 41.90')
 
         expect(
             within(orderContainers[1]).getByTestId('order-id')
         ).toHaveTextContent('b6b6c212-d30e-4d4a-805d-90b52ce6b37d')
 
-        orderProducts = within(orderContainers[1]).getAllByTestId('order-products-details')
+        orderProducts = within(orderContainers[1]).getAllByTestId('order-product-details')
         expect(orderProducts.length).toBe(1)
 
         expect(
-            within(orderProducts[0]).getByText('Intermediate Size Basketball').toBeInTheDocuments()
-        )
+            within(orderProducts[0]).getByText('Intermediate Size Basketball')
+        ).toBeInTheDocument()
     })
 })
-

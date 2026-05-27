@@ -6,7 +6,9 @@ import axios from 'axios';
 
 export function OrdersGrid({ order ,loadCart}) {
 	return (
-		<div className="order-details-grid">
+		<div className="order-details-grid"
+		data-testid = 'order-details-grid'
+		>
 			{order.products.map((orderProduct) => {
         const addToCart = async () => {
           await axios.post(`/api/cart-items`,{
@@ -17,12 +19,15 @@ export function OrdersGrid({ order ,loadCart}) {
         }
 
 				return (
-					<Fragment key={orderProduct.id}>
+					<Fragment key={orderProduct.productId}>
 						<div className="product-image-container">
 							<img src={orderProduct.product.image} />
 						</div>
 
-						<div className="product-details">
+						<div
+							className="product-details"
+							data-testid="order-product-details"
+						>
 							<div className="product-name">{orderProduct.product.name}</div>
 							<div className="product-delivery-date">
 								Arriving on :{dayjs(order.estimatedDeliveryTimeMs).format('DD, MMMM ')}

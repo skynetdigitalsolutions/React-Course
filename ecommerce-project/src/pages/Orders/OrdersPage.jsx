@@ -22,10 +22,16 @@ export function OrdersPage({ cart,loadCart }) {
 			<div className="orders-page">
 				<div className="page-title">Your Orders</div>
 
-				<div className="orders-grid">
+				<div className="orders-grid" 
+				
+				>
 					{orders.map((order) => {
 						return (
-							<div key={order.id} className="order-container">
+							<div
+								key={order.id}
+								className="order-container"
+								data-testid="order-container"
+							>
 								<OrdersHeader order={order} />
 								<OrdersGrid order={order} loadCart = {loadCart}/>
 							</div>
