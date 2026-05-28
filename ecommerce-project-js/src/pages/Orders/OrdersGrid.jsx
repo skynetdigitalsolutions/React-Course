@@ -1,0 +1,52 @@
+import { Fragment } from 'react';
+import { Link } from 'react-router';
+import dayjs from 'dayjs';
+import './OrdersPage.css';
+import axios from 'axios';
+
+export function OrdersGrid({ order ,loadCart}) {
+	return (
+		<div className="order-details-grid"
+		data-testid = 'order-details-grid'
+		>
+			{order.products.map((orderProduct) => {
+        const addToCart = async () => {
+          await axios.post(`/api/cart-items`,{
+            productId: orderProduct.product.id,
+            quantity:1
+          })
+          await loadCart()
+        }
+
+				return (
+					<Fragment key={orderProduct.productId}>
+						<div className="product-image-container">
+							<img src={orderProduct.product.image} />
+						</div>
+
+						<div
+							className="product-details"
+							data-testid="order-product-details"
+						>
+							<div className="product-name">{orderProduct.product.name}</div>
+							<div className="product-delivery-date">
+								Arriving on :{dayjs(order.estimatedDeliveryTimeMs).format('DD, MMMM ')}
+							</div>
+							<div className="product-quantity">Quantity:{orderProduct.quantity}</div>
+							<button className="buy-again-button button-primary" onClick={addToCart}>
+								<img className="buy-again-icon" src="src/assets/icons/buy-again.png" />
+								<span className="buy-again-message"  >Add to Cart</span>
+							</button>
+						</div>
+
+						<div className="product-actions">
+							<Link to={`/tracking/${order.id}/${orderProduct.product.id}`}>
+								<button className="track-package-button button-secondary">Track package</button>
+							</Link>
+						</div>
+					</Fragment>
+				);
+			})}
+		</div>
+	);
+}

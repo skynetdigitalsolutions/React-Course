@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Header } from '../../components/Header.jsx';
+import { Header } from '../../components/Header';
 import './OrdersPage.css';
 import { OrdersGrid } from './OrdersGrid.jsx';
 import { OrdersHeader } from './OrdersHeader.jsx';
