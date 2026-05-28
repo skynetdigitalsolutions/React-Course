@@ -1,0 +1,13 @@
+.App-content {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-content h1 {
+  text-align: center;
+  margin: 0%;
+}

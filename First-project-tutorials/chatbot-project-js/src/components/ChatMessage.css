@@ -1,0 +1,26 @@
+.chat-message-user {
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+
+.chat-message-atlas {
+    display: flex;
+    align-items: start;
+}
+
+.message-content {
+    border-radius: 10px;
+    font-family: Arial;
+    background-color: rgb(238, 238, 238);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    max-width: 300px;
+}
+
+.chat-profile-picture {
+    width: 50px;
+    border-radius: 10px;
+}

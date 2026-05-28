@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ChatInput } from './components/ChatInput'
 import ChatMessages from './components/ChatMessages'
+import Favicon from './assets/chatbot.jpg'
 import './App.css'
 
 
@@ -24,17 +25,27 @@ function App() {
     id: 'id4'
   }])
 
+  const title = `${chatMessages.length} Messages`
 
-  return (<div className='App-content'>
-    <h1> Atlas Technologies</h1>
-    <ChatMessages
-      chatMessages={chatMessages}
-    />
-    <ChatInput
-      chatMessages={chatMessages}
-      setChatMessages={setChatMessages}
-    />
-  </div>
+
+  return (
+
+    <>
+      <title>{title}</title>
+      <link rel="icon"  type="image/jpeg"  href={Favicon}  />
+
+
+      <div className='App-content'>
+        <h1>Atlas Technologies</h1>
+        <ChatMessages
+          chatMessages={chatMessages}
+        />
+        <ChatInput
+          chatMessages={chatMessages}
+          setChatMessages={setChatMessages}
+        />
+      </div>
+    </>
   )
 }
 

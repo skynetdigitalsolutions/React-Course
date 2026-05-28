@@ -2,7 +2,13 @@ import { Link,useNavigate,useSearchParams } from 'react-router';
 import './header.css';
 import {useState} from 'react';
 
-export function Header({ cart }) {
+type HeaderProps = {cart:{
+	productId:string;
+	quantity:number;
+	deliveryOptionId:string;
+}[]}
+
+export function Header({ cart } : HeaderProps) {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams()
 	let totalQuantity = 0;
